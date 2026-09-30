@@ -264,6 +264,12 @@ router();
   if(closeBtn) closeBtn.addEventListener("click", closeDrawer);
   drawer.querySelectorAll("a").forEach(a => a.addEventListener("click", closeDrawer));
   window.addEventListener("hashchange", closeDrawer);
+
+  // Si se agranda la pantalla (celular -> tablet / rotar), se cierra el panel
+  // para que no quede el fondo oscuro ni el scroll bloqueado.
+  window.matchMedia("(min-width: 561px)").addEventListener("change", (e) => {
+    if(e.matches) closeDrawer();
+  });
 })();
 
 /* =========================================================
