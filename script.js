@@ -316,3 +316,39 @@ router();
 
   setActive("#top");
 })();
+
+/* =========================================================
+   Nav que se achica al scrollear (progresivo)
+   - Inicio, arriba de todo: nav en tamaño grande.
+   - Apenas empezás a bajar (se empieza a ver la foto del hero),
+     el nav se achica de a poco hasta llegar a su tamaño chico.
+   - Al volver arriba de todo: vuelve al tamaño grande.
+   - En páginas de fandom / búsqueda: va siempre achicado.
+   ========================================================= */
+(function navShrink(){
+  const header = document.querySelector("header");
+  const homeView = document.getElementById("view-home");
+  if(!header || !homeView) return;
+
+  const RANGE = 100; // px de scroll hasta que el nav llega a su tamaño chico
+  let ticking = false;
+
+  function update(){
+    ticking = false;
+    const isHome = !homeView.hidden;
+    document.body.classList.toggle("not-home", !isHome);
+
+    const p = isHome ? Math.min(Math.max(window.scrollY / RANGE, 0), 1) : 1;
+    header.style.setProperty("--s", p.toFixed(3));
+  }
+
+  function onScroll(){
+    if(ticking) return;
+    ticking = true;
+    requestAnimationFrame(update);
+  }
+
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("hashchange", update);
+  update();
+})();

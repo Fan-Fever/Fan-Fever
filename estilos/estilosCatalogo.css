@@ -72,7 +72,25 @@
     gap: 24px;
   }
   .brand{ justify-self:start; }
-  .brand img{ height: 100px; width:130px; }
+  .brand img{ height: calc(100px - 30px * var(--s, 0)); width: calc(130px - 39px * var(--s, 0)); }
+
+  /* ---------- Nav que se achica al scrollear ---------- */
+  /* JS actualiza --s en el <header>: 0 = arriba de todo (nav grande),
+     1 = ya scrolleaste lo suficiente (nav chico). Entre medio se achica de a poco. */
+  header{
+    --s: 0;
+    box-shadow: 0 8px 18px -12px rgba(170,24,78, calc(0.16 * var(--s)));
+  }
+  .nav-top{
+    padding-top: calc(10px - 4px * var(--s, 0));
+    padding-bottom: calc(10px - 4px * var(--s, 0));
+  }
+  .search-form{
+    padding-top: calc(8px - 3px * var(--s, 0));
+    padding-bottom: calc(8px - 3px * var(--s, 0));
+  }
+  /* En fandom / búsqueda el nav ya va achicado, así que el espacio de arriba es menor */
+  body.not-home{ padding-top: 82px; }
 
   .navlinks-wrap{ justify-self:center; }
   .navlinks{ display:flex; gap: 26px; font-weight:600; font-size: 0.94rem; }
@@ -426,7 +444,10 @@
     .navlinks-wrap{ grid-area: links; justify-self:center; }
     .navlinks{ gap: 28px; padding-bottom: 4px; }
 
-    body{ padding-top: 136px; }
+    body{ padding-top: 131px; }
+    .nav-top{ padding-top: calc(8px - 2px * var(--s, 0)); padding-bottom: calc(6px - 2px * var(--s, 0)); }
+    .brand img{ height: calc(80px - 24px * var(--s, 0)); width:auto; }
+    body.not-home{ padding-top: 102px; }
 
     /* Categorías: siempre las 3 en la misma línea */
     .cat-grid{ gap: 16px; }
@@ -480,6 +501,14 @@
     .search-submit{ width:30px; height:30px; border-radius:18px; }
 
     body{ padding-top: 155px; }
+    .nav-top{ padding-top: calc(7px - 2px * var(--s, 0)); padding-bottom: calc(7px - 2px * var(--s, 0)); }
+    .brand img{ height: calc(90px - 26px * var(--s, 0)); width: calc(123px - 35px * var(--s, 0)); }
+    .search-form{
+      height: calc(45px - 5px * var(--s, 0));
+      padding-top: calc(8px - 3px * var(--s, 0));
+      padding-bottom: calc(8px - 3px * var(--s, 0));
+    }
+    body.not-home{ padding-top: 119px; }
 
     /* Categorías: una debajo de otra solo en celular */
     .cat-grid{ grid-template-columns: 1fr; gap: 24px; }
